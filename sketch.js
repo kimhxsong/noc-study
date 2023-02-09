@@ -10,21 +10,32 @@ class Walker {
 	}
 
 	step() {
-		// let xstep = floor(random(3)) - 1;
-		// let ystep = floor(random(3)) - 1;
-		let xstep = random(-0.9, 1);
-		let ystep = random(-0.9, 1);
-  
-		this.x += xstep;
-		this.y += ystep;
+		let r = random(1);
+
+		if (r < 0.5) {
+		// https://p5js.org/reference/#/p5/mouseX
+		  this.x += mouseX > this.x ? 1 : -1;
+		  this.y += mouseY > this.y ? 1 : -1;
+		} else {
+			let xstep = floor(random(3)) - 1;
+			let ystep = floor(random(3)) - 1;
+
+			this.x += xstep;
+			this.y += ystep;
+		}
+
+		this.x %= width;
+		this.y %= height;
 	}
 }
 
+let walker;
+
 function setup() 
 {
-	walker = new Walker()
 	createCanvas(400, 400);
 	background(255);
+	walker = new Walker()
 }
 
 function draw()
