@@ -1,0 +1,53 @@
+// see also: https://eslint.org/docs/user-guide/configuring
+
+{
+    "ignorePatterns": ["/dist/"],
+  
+    // config common to all
+    "env": {
+      "es6": true
+    },
+  
+    "overrides": [
+      // config for source code in TypeScript
+      {
+        "files": ["src/**/*.ts"],
+        "plugins": ["@typescript-eslint"],
+        "parser": "@typescript-eslint/parser",
+        "env": {
+          "browser": true
+        },
+        "extends": [
+          // basic recommended rules
+          "eslint:recommended",
+  
+          // turn off rules that might conflict with Prettier
+          "prettier",
+  
+          // recommended rules for TypeScript
+          "plugin:@typescript-eslint/recommended",
+  
+          // overwrite config of @typescript-eslint for p5.js
+          "@fal-works/p5js/@typescript-eslint",
+  
+          // turn off rules of @typescript-eslint that might conflict with Prettier
+          "prettier/@typescript-eslint"
+        ],
+        "rules": {
+          "no-fallthrough": "off", // already checked by TypeScript
+          "@typescript-eslint/no-explicit-any": "off" // this rule is a little too strict if using p5.js
+        }
+      },
+  
+      // config just for pre-formatting purpose
+      {
+        "files": ["**/*.js"],
+        "rules": {
+          "lines-around-comment": [
+            "error",
+            { "beforeBlockComment": true, "beforeLineComment": true }
+          ]
+        }
+      }
+    ]
+  }
